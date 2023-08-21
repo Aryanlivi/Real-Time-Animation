@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "pixi.js": "^7.2.4",
+    "regenerator-runtime": "^0.14.0"
+  },
+  "name": "learnposenet",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Aryan Manandhar",
+  "license": "ISC",
+  "description": ""
+}
