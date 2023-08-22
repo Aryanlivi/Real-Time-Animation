@@ -4,7 +4,8 @@
   },
   "dependencies": {
     "pixi.js": "^7.2.4",
-    "regenerator-runtime": "^0.14.0"
+    "regenerator-runtime": "^0.14.0",
+    "three": "^0.155.0"
   },
   "name": "learnposenet",
   "version": "1.0.0",

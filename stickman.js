@@ -1,7 +1,10 @@
 import * as PIXI  from 'pixi.js';
 import 'regenerator-runtime/runtime';
-import{webcamVideo,camApp} from './video'
-export const stickmanApp=new PIXI.Application({backgroundColor:0xffffff})
+import{webcamVideo,camContainer} from './video'
+import { pixiApp } from './main';
+
+const stickmanContainer=new PIXI.Container()
+stickmanContainer.position.set(0,0);
 class StickMan{
     app;
     obj=new PIXI.Graphics();
@@ -28,7 +31,7 @@ class StickMan{
         this.obj.lineTo(x2, y2);
     }
 
-    createMan(){
+    createMan(){       
         this.obj.clear();
         for (const part in this.partData) {
             const { x, y } = this.partData[part];
@@ -47,16 +50,23 @@ class StickMan{
         this.connectBodyParts('rightHip', 'rightKnee');
         this.connectBodyParts('leftKnee', 'leftAnkle');
         this.connectBodyParts('rightKnee', 'rightAnkle');
-        //camApp.stage.addChild(this.obj);
-        stickmanApp.stage.addChild(this.obj)
+        //camContainer.addChild(this.obj);
+        this.obj.position.set(0,0)
+        //stickmanContainer.width=pixiApp.renderer.width*0.2;
+       // stickmanContainer.height=pixiApp.renderer.height*0.2;
+        stickmanContainer.addChild(this.obj)
+        pixiApp.stage.addChild(stickmanContainer)
     }
-    handlePose(){    
+    handlePose(){  
+        
         const poseNet = ml5.poseNet(webcamVideo, ()=>{  console.log('Model Loaded!!');});
         poseNet.on("pose",(poseData)=>{ 
             let pose;
-            if(poseData.length>0){
-                pose=poseData[0].pose;
-            }
+            poseData.forEach(ele => {
+                if(ele.pose.score>0.6){
+                    pose=ele.pose;
+                }
+            });
             if(pose){
                 this.mapChanges(pose.keypoints);
                 this.createMan()
