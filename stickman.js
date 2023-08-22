@@ -21,10 +21,9 @@ class StickMan{
         }
     }
     connectBodyParts(part1,part2){
-        console.log("adsd")
         const { x: x1, y: y1 } = this.partData[part1];
         const { x: x2, y: y2 } = this.partData[part2];
-        this.obj.beginFill(0xff0000)
+        this.obj.lineStyle(4, 0xFF0000);
         this.obj.moveTo(x1, y1);
         this.obj.lineTo(x2, y2);
     }
@@ -37,8 +36,19 @@ class StickMan{
             this.obj.drawCircle(x, y, 5);
         }
         this.connectBodyParts('leftShoulder', 'rightShoulder');
-        camApp.stage.addChild(this.obj);
-        //stickmanApp.stage.addChild(this.obj)
+        this.connectBodyParts('leftShoulder', 'leftElbow');
+        this.connectBodyParts('rightShoulder', 'rightElbow');
+        this.connectBodyParts('leftElbow', 'leftWrist');
+        this.connectBodyParts('rightElbow', 'rightWrist');
+        this.connectBodyParts('leftShoulder', 'leftHip');
+        this.connectBodyParts('rightShoulder', 'rightHip');
+        this.connectBodyParts('leftHip', 'rightHip');
+        this.connectBodyParts('leftHip', 'leftKnee');
+        this.connectBodyParts('rightHip', 'rightKnee');
+        this.connectBodyParts('leftKnee', 'leftAnkle');
+        this.connectBodyParts('rightKnee', 'rightAnkle');
+        //camApp.stage.addChild(this.obj);
+        stickmanApp.stage.addChild(this.obj)
     }
     handlePose(){    
         const poseNet = ml5.poseNet(webcamVideo, ()=>{  console.log('Model Loaded!!');});
