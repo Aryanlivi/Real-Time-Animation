@@ -6,6 +6,6 @@ export const pixiApp=new PIXI.Application({
     height:window.innerHeight,
     backgroundColor:0xffffff})
 
-document.body.appendChild(pixiApp.view);
+//document.body.appendChild(pixiApp.view);
 document.body.appendChild(renderer.domElement);
-activateCam()
+activateCam(pixiApp)
