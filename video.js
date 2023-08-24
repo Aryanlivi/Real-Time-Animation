@@ -1,5 +1,5 @@
 import * as PIXI  from 'pixi.js';
-import { pixiApp } from './main';
+import { pixiApp } from './2dview';
 import { stickman } from './stickman';
 export const webcamVideo = document.createElement("video");
 webcamVideo.width=800;
@@ -7,9 +7,6 @@ webcamVideo.height=600;
 //export const camApp=new PIXI.Application({width:webcamVideo.width,height:webcamVideo.height});
 
 export const camContainer=new PIXI.Container()
-
-
-
 export function activateCam(){
     
     //camContainer.position.set(0,pixiApp.renderer.height/2)

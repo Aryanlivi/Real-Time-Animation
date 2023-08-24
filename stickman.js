@@ -1,7 +1,7 @@
 import * as PIXI  from 'pixi.js';
 import 'regenerator-runtime/runtime';
 import{webcamVideo,camContainer} from './video'
-import { pixiApp } from './main';
+import { pixiApp } from './2dview';
 
 const stickmanContainer=new PIXI.Container()
 stickmanContainer.position.set(0,0);
@@ -22,6 +22,7 @@ class StickMan{
             y: position.y
         };
         }
+        
     }
     connectBodyParts(part1,part2){
         const { x: x1, y: y1 } = this.partData[part1];
@@ -54,7 +55,8 @@ class StickMan{
         this.obj.position.set(0,0)
         //stickmanContainer.width=pixiApp.renderer.width*0.2;
        // stickmanContainer.height=pixiApp.renderer.height*0.2;
-        stickmanContainer.addChild(this.obj)
+        //stickmanContainer.addChild(this.obj)
+        camContainer.addChild(this.obj)
         pixiApp.stage.addChild(stickmanContainer)
     }
     handlePose(){  
@@ -62,14 +64,22 @@ class StickMan{
         const poseNet = ml5.poseNet(webcamVideo, ()=>{  console.log('Model Loaded!!');});
         poseNet.on("pose",(poseData)=>{ 
             let pose;
+            let maxScore = -Infinity; 
+            let selectedPose = null;
             poseData.forEach(ele => {
-                if(ele.pose.score>0.6){
-                    pose=ele.pose;
+                if (ele.pose.score > maxScore) {
+                    maxScore = ele.pose.score;
+                    selectedPose = ele.pose;
                 }
             });
+
+            if (selectedPose) {
+                pose = selectedPose;
+            }
             if(pose){
                 this.mapChanges(pose.keypoints);
                 this.createMan()
+                
             }});
     }
 }
