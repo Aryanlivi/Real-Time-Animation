@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel ./src/templates/index.html"
   },
   "dependencies": {
     "pixi.js": "^7.2.4",
